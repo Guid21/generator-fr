@@ -1,0 +1,23 @@
+import { Action } from 'redux-actions';
+import { ActionsObservable, ofType } from 'redux-observable';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
+
+import { globalCatchError } from '@utils/scripts';
+
+import { <%= titleWithCapitalise %>Actions } from './<%= title %>.actions';
+import { get<%= titleWithCapitalise %>, Get<%= titleWithCapitalise %>Props } from './<%= title %>.service';
+
+export const get<%= titleWithCapitalise %>$ = (actions$: ActionsObservable<Action<Get<%= titleWithCapitalise %>Props>>) =>
+  actions$.pipe(
+    ofType(<%= titleWithCapitalise %>Actions.Get<%= titleWithCapitalise %>),
+    debounceTime(300),
+    switchMap(({ payload }) =>
+      get<%= titleWithCapitalise %>(payload).pipe(
+        map((payload) => ({
+          type: <%= titleWithCapitalise %>Actions.Get<%= titleWithCapitalise %>Success,
+          payload,
+        })),
+        globalCatchError({ type: <%= titleWithCapitalise %>Actions.Get<%= titleWithCapitalise %>Error }),
+      ),
+    ),
+  );

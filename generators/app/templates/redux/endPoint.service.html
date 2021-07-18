@@ -1,0 +1,16 @@
+import Axios from 'axios-observable';
+import { deserialize } from 'deserialize-json-api';
+import { map } from 'rxjs/operators';
+
+export type Get<%= titleWithCapitalise %>Props = unknown;
+
+export const get<%= titleWithCapitalise %> = (arg: Get<%= titleWithCapitalise %>Props) => {
+  return Axios.request({
+    method: 'GET',
+    url: `/<%= title %>`,
+  }).pipe(
+    map(({ data }) => {
+      return { data: deserialize(data) };
+    }),
+  );
+};

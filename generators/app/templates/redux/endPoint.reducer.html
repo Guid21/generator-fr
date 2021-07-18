@@ -1,0 +1,60 @@
+import _ from 'lodash';
+import { combineActions, handleActions } from 'redux-actions';
+
+import { <%= titleWithCapitalise %> } from '@interfaces';
+
+import { <%= titleWithCapitalise %>Actions } from './<%= title %>.actions';
+
+export type <%= titleWithCapitalise %>State = {
+  data: <%= titleWithCapitalise %>;
+  isLoading?: boolean;
+  isError?: boolean;
+};
+
+const initialState: <%= titleWithCapitalise %>State = {
+  data: {
+    data: [],
+    meta: {
+      total: 0,
+    },
+  },
+  isLoading: false,
+  isError: false,
+};
+
+const pendingActions = combineActions(<%= titleWithCapitalise %>Actions.Get<%= titleWithCapitalise %>);
+
+const errorActions = combineActions(<%= titleWithCapitalise %>Actions.Get<%= titleWithCapitalise %>Error);
+
+const successActions = combineActions(<%= titleWithCapitalise %>Actions.Get<%= titleWithCapitalise %>Success);
+
+export default handleActions(
+  {
+    // -------------- PENDING --------------
+    [pendingActions.toString()](state: <%= titleWithCapitalise %>State) {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    },
+    // -------------- ERROR --------------
+    [errorActions.toString()](state: <%= titleWithCapitalise %>State) {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    },
+    // -------------- SUCCESS --------------
+    [successActions.toString()](state: <%= titleWithCapitalise %>State, { payload: { data } }: { payload: { data: <%= titleWithCapitalise %> } }) {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: { ...data, data: _.unionBy(data.data, state.data.data, 'id') },
+      };
+    },
+  },
+  initialState,
+);
