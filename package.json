@@ -1,0 +1,23 @@
+{
+  "name": "generator-fr",
+  "version": "0.0.3",
+  "description": "",
+  "homepage": "",
+  "author": {
+    "name": "Zkirov Timur",
+    "email": "uryuk.uz@gmail.com"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [],
+  "engines": {
+    "npm": ">= 4.0.0"
+  },
+  "dependencies": {
+    "yeoman-generator": "^3.1.1"
+  },
+  "repository": "Guid21/generator-fr",
+  "license": "MIT"
+}

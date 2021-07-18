@@ -1,0 +1,13 @@
+import React from 'react';
+
+import cn from 'classnames';
+
+import styles from './<%= title %>.module.scss';
+
+type <%= title %>Props = Readonly<unknown>;
+
+const <%= title %>: React.FC<<%= title %>Props> = () => {
+  return <div className={cn(styles.<%= title %>)}><%= title %> component works!</div>;
+};
+
+export default <%= title %>;
